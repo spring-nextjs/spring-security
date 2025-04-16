@@ -1,0 +1,15 @@
+##############################
+###### SECURITY SETTINGS #####
+##############################
+rsa:
+  public-key: classpath:certs/public.pem
+  private-key: classpath:certs/private.pem
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${SERVER_URI}:${SERVER_PORT}/${SPRING_APPLICATION_NAME}
+          expiration-seconds-access-token: 600
+          expiration-seconds-refresh-token: 1200

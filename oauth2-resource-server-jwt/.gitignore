@@ -1,5 +1,9 @@
 HELP.md
 
+### Certificates ###
+*.pem
+*.pub
+
 ### Git ###
 .gitattributes
 
