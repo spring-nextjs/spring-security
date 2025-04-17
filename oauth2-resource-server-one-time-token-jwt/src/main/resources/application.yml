@@ -1,0 +1,38 @@
+##############################
+###### GENERAL SETTINGS ######
+##############################
+server:
+  port: ${SERVER_PORT}
+  # Show an error message in JSON response
+  error:
+    include-message: always
+    include-stacktrace: never
+    path: ${SERVER_ERROR_PATH}
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH}
+
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - application-database.yml
+
+##############################
+#### SPRING DEBUG SETTING ####
+##############################
+logging:
+  level:
+    # Change to debug in development
+    root: info
+    org:
+      springframework:
+        web: info
+      hibernate: info
+
+##############################
+###### FRONTEND SETTING ######
+##############################
+frontend:
+  url: ${FRONTEND_URL}
