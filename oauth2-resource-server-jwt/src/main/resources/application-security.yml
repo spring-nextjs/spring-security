@@ -12,4 +12,4 @@ spring:
         jwt:
           issuer-uri: http://${SERVER_URI}:${SERVER_PORT}/${SPRING_APPLICATION_NAME}
           expiration-seconds-access-token: 600
-          expiration-seconds-refresh-token: 1200
+          expiration-seconds-refresh-token: 14400

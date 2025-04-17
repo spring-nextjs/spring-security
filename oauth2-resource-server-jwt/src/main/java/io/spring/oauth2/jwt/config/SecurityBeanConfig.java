@@ -17,10 +17,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.*;
+
+import java.time.Duration;
 
 /**
  * Configuration class for security-related beans.
@@ -75,7 +76,15 @@ class SecurityBeanConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
+
+        OAuth2TokenValidator<Jwt> withClockSkew =
+                new DelegatingOAuth2TokenValidator<>(
+                        new JwtTimestampValidator(Duration.ofSeconds(60)));
+
+        jwtDecoder.setJwtValidator(withClockSkew);
+
+        return jwtDecoder;
     }
 
     @Bean

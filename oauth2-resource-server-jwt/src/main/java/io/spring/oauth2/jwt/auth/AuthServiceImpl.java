@@ -90,14 +90,14 @@ class AuthServiceImpl implements AuthService {
     }
 
     /**
-     * Validates a user based on the provided jwt tokens.
-     * If the jwt token is invalid but the refresh token is valid, a new jwt token is created using the refresh token.
+     * Validates the provided JWT and refresh token.
+     * If valid, it generates a new access token and returns the authentication response.
      *
-     * @return an authentication response containing the JWT and the refresh token
+     * @return an authentication response containing the new access token and the already existing refresh token
      * @throws InvalidAuthenticationException if the provided JWT and refresh token are invalid
      */
     @Override
-    public AuthDto validate() {
+    public AuthDto refresh() {
         String accessToken = httpRequestService.extractAccessTokenFromAuthorizationHeader();
         String refreshToken = httpRequestService.extractRefreshTokenFromCookie();
 
@@ -108,12 +108,12 @@ class AuthServiceImpl implements AuthService {
 
         String email = jwtService.extractEmailFromJwt(refreshToken, TokenType.REFRESH);
         User user = userService.findByEmail(email);
+        tokenService.invalidateToken(
+                jwtService.extractIdFromJwt(accessToken, TokenType.ACCESS),
+                TokenType.ACCESS
+        );
+        accessToken = jwtService.createJwt(user, TokenType.ACCESS);
 
-        if (!jwtService.isJwtValid(accessToken, TokenType.ACCESS)) {
-            tokenService.invalidateAllTokensByUserId(user.getId());
-            accessToken = jwtService.createJwt(user, TokenType.ACCESS);
-            refreshToken = jwtService.createJwt(user, TokenType.REFRESH);
-        }
         return authFactory.createAuthResponse(
                 user, "auth.validate.success", accessToken, refreshToken);
     }

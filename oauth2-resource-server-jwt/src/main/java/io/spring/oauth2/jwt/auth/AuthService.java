@@ -9,5 +9,5 @@ import io.spring.oauth2.jwt.user.UserCreateDto;
 interface AuthService {
     AuthDto login(AuthLoginDto loginDto);
     AuthDto register(UserCreateDto userCreateDto);
-    AuthDto validate();
+    AuthDto refresh();
 }

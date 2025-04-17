@@ -57,10 +57,13 @@ class JwtAuthenticationFilter extends OncePerRequestFilter {
       @NonNull FilterChain filterChain
   ) throws ServletException, IOException {
     String accessToken = httpRequestService.extractAccessTokenFromAuthorizationHeader();
-    if (accessToken == null) {
+    String refreshToken = httpRequestService.extractRefreshTokenFromCookie();
+
+    if (accessToken == null || refreshToken == null) {
       filterChain.doFilter(request, response);
       return;
     }
+
     String userEmail = jwtService.extractEmailFromJwt(accessToken, TokenType.ACCESS);
     if (SecurityContextHolder.getContext().getAuthentication() == null
             && jwtService.isJwtValid(accessToken, TokenType.ACCESS)
