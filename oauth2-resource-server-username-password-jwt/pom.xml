@@ -12,7 +12,7 @@
 	<artifactId>oauth2.jwt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>oauth2.jwt</name>
-	<description>OAuth2 Resource Server JWT</description>
+	<description>OAuth2 Resource Server Username Password JWT</description>
 	<url/>
 	<licenses>
 		<license/>
