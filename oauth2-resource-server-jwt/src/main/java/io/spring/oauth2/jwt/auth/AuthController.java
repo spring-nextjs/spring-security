@@ -8,10 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(Constant.Request.AUTH)
@@ -32,9 +29,9 @@ record AuthController(
         return createAuthResponse(authService.register(userCreateDto));
     }
 
-    @PostMapping("/validate")
-    ResponseEntity<AuthDto> validate() {
-        return createAuthResponse(authService.validate());
+    @GetMapping("/refresh")
+    ResponseEntity<AuthDto> refresh() {
+        return createAuthResponse(authService.refresh());
     }
 
     private ResponseEntity<AuthDto> createAuthResponse(AuthDto authDto) {
