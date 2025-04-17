@@ -18,7 +18,7 @@ git clone https://github.com/spring-nextjs/spring-security.git
 ```
 Then, navigate to the project directory:
 ```bash
-cd spring-security/oauth2-resource-server-jwt
+cd spring-security/oauth2-resource-server-username-password-jwt
 ```
 Create the certificates
 ```bash
