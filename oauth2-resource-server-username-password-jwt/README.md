@@ -1,7 +1,8 @@
-# OAuth2 Resource Server with JWT
+# OAuth2 Resource Server with Username/Password and JWT
 
 ## 1 Description
-This is a simple example of an OAuth2 Resource Server that uses JWT (JSON Web Tokens) for authentication and authorization.
+This is a simple example of an OAuth2 Resource Server that uses a Username, Password and JWT (JSON Web Tokens) for authentication and authorization.
+[Documentation available here](https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html)
 
 ## 2 Requirements
 - [Git](https://git-scm.com/downloads) 
